@@ -22,9 +22,9 @@ namespace Calc
 
         public ExampleString(string example)
         {
-            example = example.Replace('.', ',');
+            example = example.Replace('.', ',').Replace(")", "").Replace("(", "");
             this.example = example;
-            Regex regex = new Regex("[*\\-+\\/]");
+            Regex regex = new Regex("(?<=\\d)[*\\-+\\/]");
             numbers = regex.Split(example);
             x = double.Parse(numbers[0]);
             y = double.Parse(numbers[1]);
@@ -54,14 +54,14 @@ namespace Calc
         public void MathSign()
         {
             isPlus = Regex.IsMatch(example, "\\+");
-            isMinus = Regex.IsMatch(example, "-");
+            isMinus = Regex.IsMatch(example, "\\d-");
             isMultiplication = Regex.IsMatch(example, "\\*");
             isDivision = Regex.IsMatch(example, "/");
         }
 
         public void Display()
         {
-            Console.WriteLine(example + "=" + answer);
+            Console.WriteLine(answer);
         }
 
         public string Addition()
