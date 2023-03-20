@@ -11,10 +11,8 @@ namespace Calc
     {
         public static void Main()
         {
-            SimpleExample exampleString = new("5+-3");
-            Console.WriteLine(exampleString.GetAnswer());
-            ReplaceMethod replaceMethod = new("3+(-3)*(-2)");
-            Console.WriteLine(replaceMethod.GetAnswer());
+            ExampleInBrackets exampleInBrackets = new("1+2+(3+(9+6)+7)+8");
+            //ExampleInBrackets c = new("3+(9+6)+7");
         }
     }
 }
