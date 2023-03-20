@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Calc
 {
-    internal class ExampleString
+    public class SimpleExample
     {
         public string example;
         public string[] numbers;
@@ -20,18 +20,18 @@ namespace Calc
         public bool isMultiplication;
         public bool isDivision;
 
-        public ExampleString(string example)
+        public SimpleExample(string example)
         {
-            example = example.Replace('.', ',').Replace(")", "").Replace("(", "");
+            example = example.Replace('.', ',').Replace(")", "").Replace("(", ""); //убрать потом replace
             this.example = example;
             Regex regex = new Regex("(?<=\\d)[*\\-+\\/]");
             numbers = regex.Split(example);
             x = double.Parse(numbers[0]);
             y = double.Parse(numbers[1]);
             MathSign();
-            GetAnswer();
+            SetAnswer();
         }
-        public void GetAnswer()
+        public void SetAnswer()
         {
             if (isPlus)
             {
@@ -59,33 +59,33 @@ namespace Calc
             isDivision = Regex.IsMatch(example, "/");
         }
 
-        public void Display()
-        {
-            Console.WriteLine(answer);
-        }
-
         public string Addition()
         {
-            string example = (x + y).ToString();
+            string example = Math.Round((x + y), 2).ToString();
             return example;
         }
 
         public string Subtraction()
         {
-            string example = (x - y).ToString();
+            string example = Math.Round((x - y), 2).ToString();
             return example;
         }
 
         public string Multiplicationt()
         {
-            string example = (x * y).ToString();
+            string example = Math.Round((x * y), 2).ToString();
             return example;
         }
 
         public string Division()
         {
-            string example = (x / y).ToString();
+            string example = Math.Round((x / y), 2).ToString();
             return example;
+        }
+
+        public string GetAnswer()
+        {
+            return answer;
         }
     }
 }

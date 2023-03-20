@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace Calc
 {
-    internal class MainClass
+    public class MainClass
     {
         public static void Main()
         {
-            string example = Console.ReadLine();
-            ExampleString exampleString = new(example);
-            exampleString.Display();
+            SimpleExample exampleString = new("5+-3");
+            Console.WriteLine(exampleString.GetAnswer());
+            ReplaceMethod replaceMethod = new("3+(-3)*(-2)");
+            Console.WriteLine(replaceMethod.GetAnswer());
         }
     }
 }
