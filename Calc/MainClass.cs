@@ -11,8 +11,10 @@ namespace Calc
     {
         public static void Main()
         {
-            ExampleInBrackets exampleInBrackets = new("1+2+(3+(9+6)+7)+8");
-            //ExampleInBrackets c = new("3+(9+6)+7");
+            ExampleInBrackets exampleInBrackets = new("1+(2+(3+(9+6)+7)+8)+9");
+            //ExampleInBrackets c = new("3+(6)+7");
+            
         }
+
     }
 }

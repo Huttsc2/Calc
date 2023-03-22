@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Calc
 {
-    internal class ExampleInBrackets
+    public class ExampleInBrackets
     {
         public string example;
-        public string pattern = "\\([\\(\\-\\d+,?\\d*\\)]*\\d+[+\\-*\\/][\\(\\-\\d+,?d*\\)]*\\)";
+        public string patternExprecionInBrackets = "\\([\\(\\-\\d+,?\\d*\\)]*\\d+[+\\-*\\/][\\(\\-\\d+,?d*\\)]*\\)";
+        public bool isExprecionInBrackets;
         public string shortExample;
         public bool isShortest;
         public bool isSinglePositive;
@@ -21,16 +22,30 @@ namespace Calc
         {
             this.example = example;
             Console.WriteLine(example);
-            SetShortExample();
-            RemoveBrackets();
-            Shortest();
-            Replace();
-            Console.WriteLine(newExample);
+            exprecionInBrackets();
+            if (isExprecionInBrackets)
+            {
+                SetShortExample();
+                RemoveBrackets();
+                SinglePositive();
+                Shortest();
+                Replace();
+                Console.WriteLine(newExample);
+            }
+            else
+            {
+                Console.WriteLine("stop");
+            }
+        }
+
+        public void exprecionInBrackets()
+        {
+            isExprecionInBrackets = Regex.IsMatch(example, patternExprecionInBrackets);
         }
 
         public void SetShortExample()
         {
-            Match m = Regex.Match(example, pattern);
+            Match m = Regex.Match(example, patternExprecionInBrackets);
             if (m.Success)
             {
                 shortExample = m.Groups[0].Value;
@@ -39,7 +54,7 @@ namespace Calc
 
         public void Shortest()
         {
-            Match m = Regex.Match(shortExample, pattern);
+            Match m = Regex.Match(shortExample, patternExprecionInBrackets);
             if (m.Success)
             {
                 isShortest = false;
@@ -55,6 +70,7 @@ namespace Calc
             isSinglePositive = Regex.IsMatch(shortExample, "^\\d+,?\\d*$");
         }
 
+
         public void RemoveBrackets()
         {
             Regex firstBracket = new("^\\(");
@@ -69,26 +85,22 @@ namespace Calc
             {
                 ReplaceMethod replaceMethod = new(shortExample);
                 shortExample = replaceMethod.newFullExample;
-                SinglePositive();
                 if (!isSinglePositive)
                 {
                     shortExample = "(" + shortExample + ")";
                 }
-                Regex replacePattern = new(pattern);
+                Regex replacePattern = new(patternExprecionInBrackets);
                 newExample = replacePattern.Replace(example, shortExample, 1);
             }
             else
             {
-                Console.WriteLine("qwe");
                 ExampleInBrackets exampleInBrackets = new(shortExample);
-                ReplaceMethod replaceMethod = new(exampleInBrackets.shortExample);
-                shortExample = replaceMethod.newFullExample;
-                exampleInBrackets.SinglePositive();
-                if (!exampleInBrackets.isSinglePositive) 
+                shortExample = exampleInBrackets.newExample;
+                if (!isSinglePositive)
                 {
                     shortExample = "(" + shortExample + ")";
                 }
-                Regex replacePattern = new(pattern);
+                Regex replacePattern = new(patternExprecionInBrackets);
                 newExample = replacePattern.Replace(example, shortExample, 1);
             }
         }
